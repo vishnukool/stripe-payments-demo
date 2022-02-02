@@ -21,18 +21,18 @@ module.exports = {
   // Make sure to check the docs: https://stripe.com/docs/sources
   paymentMethods: [
     // 'ach_credit_transfer', // usd (ACH Credit Transfer payments must be in U.S. Dollars)
-    'alipay', // aud, cad, eur, gbp, hkd, jpy, nzd, sgd, or usd.
-    'bancontact', // eur (Bancontact must always use Euros)
+    // 'alipay', // aud, cad, eur, gbp, hkd, jpy, nzd, sgd, or usd.
+    // 'bancontact', // eur (Bancontact must always use Euros)
     'card', // many (https://stripe.com/docs/currencies#presentment-currencies)
-    'eps', // eur (EPS must always use Euros)
-    'ideal', // eur (iDEAL must always use Euros)
-    'giropay', // eur (Giropay must always use Euros)
-    'multibanco', // eur (Multibanco must always use Euros)
-    // 'sepa_debit', // Restricted. See docs for activation details: https://stripe.com/docs/sources/sepa-debit
-    'p24', // eur, pln
-    'sofort', // eur (SOFORT must always use Euros)
-    'wechat', // aud, cad, eur, gbp, hkd, jpy, sgd, or usd.
-    'au_becs_debit', //aud
+    // 'eps', // eur (EPS must always use Euros)
+    // 'ideal', // eur (iDEAL must always use Euros)
+    // 'giropay', // eur (Giropay must always use Euros)
+    // 'multibanco', // eur (Multibanco must always use Euros)
+    // // 'sepa_debit', // Restricted. See docs for activation details: https://stripe.com/docs/sources/sepa-debit
+    // 'p24', // eur, pln
+    // 'sofort', // eur (SOFORT must always use Euros)
+    // 'wechat', // aud, cad, eur, gbp, hkd, jpy, sgd, or usd.
+    // 'au_becs_debit', //aud
   ],
 
   // Configuration for Stripe.

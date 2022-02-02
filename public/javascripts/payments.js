@@ -490,7 +490,7 @@
       const {source} = await stripe.createSource(sourceData);
       handleSourceActivation(source);
     }
-  
+
   });
 
   // Handle new PaymentIntent result
@@ -756,114 +756,114 @@
   // List of relevant countries for the payment methods supported in this demo.
   // Read the Stripe guide: https://stripe.com/payments/payment-methods-guide
   const paymentMethods = {
-    ach_credit_transfer: {
-      name: 'Bank Transfer',
-      flow: 'receiver',
-      countries: ['US'],
-      currencies: ['usd'],
-    },
-    alipay: {
-      name: 'Alipay',
-      flow: 'redirect',
-      countries: ['CN', 'HK', 'SG', 'JP'],
-      currencies: [
-        'aud',
-        'cad',
-        'eur',
-        'gbp',
-        'hkd',
-        'jpy',
-        'nzd',
-        'sgd',
-        'usd',
-      ],
-    },
-    bancontact: {
-      name: 'Bancontact',
-      flow: 'redirect',
-      countries: ['BE'],
-      currencies: ['eur'],
-    },
+    // ach_credit_transfer: {
+    //   name: 'Bank Transfer',
+    //   flow: 'receiver',
+    //   countries: ['US'],
+    //   currencies: ['usd'],
+    // },
+    // alipay: {
+    //   name: 'Alipay',
+    //   flow: 'redirect',
+    //   countries: ['CN', 'HK', 'SG', 'JP'],
+    //   currencies: [
+    //     'aud',
+    //     'cad',
+    //     'eur',
+    //     'gbp',
+    //     'hkd',
+    //     'jpy',
+    //     'nzd',
+    //     'sgd',
+    //     'usd',
+    //   ],
+    // },
+    // bancontact: {
+    //   name: 'Bancontact',
+    //   flow: 'redirect',
+    //   countries: ['BE'],
+    //   currencies: ['eur'],
+    // },
     card: {
       name: 'Card',
       flow: 'none',
     },
-    eps: {
-      name: 'EPS',
-      flow: 'redirect',
-      countries: ['AT'],
-      currencies: ['eur'],
-    },
-    ideal: {
-      name: 'iDEAL',
-      flow: 'redirect',
-      countries: ['NL'],
-      currencies: ['eur'],
-    },
-    giropay: {
-      name: 'Giropay',
-      flow: 'redirect',
-      countries: ['DE'],
-      currencies: ['eur'],
-    },
-    multibanco: {
-      name: 'Multibanco',
-      flow: 'receiver',
-      countries: ['PT'],
-      currencies: ['eur'],
-    },
-    p24: {
-      name: 'Przelewy24',
-      flow: 'redirect',
-      countries: ['PL'],
-      currencies: ['eur', 'pln'],
-    },
-    sepa_debit: {
-      name: 'SEPA Direct Debit',
-      flow: 'none',
-      countries: [
-        'FR',
-        'DE',
-        'ES',
-        'BE',
-        'NL',
-        'LU',
-        'IT',
-        'PT',
-        'AT',
-        'IE',
-        'FI',
-      ],
-      currencies: ['eur'],
-    },
-    sofort: {
-      name: 'SOFORT',
-      flow: 'redirect',
-      countries: ['DE', 'AT'],
-      currencies: ['eur'],
-    },
-    wechat: {
-      name: 'WeChat',
-      flow: 'none',
-      countries: ['CN', 'HK', 'SG', 'JP'],
-      currencies: [
-        'aud',
-        'cad',
-        'eur',
-        'gbp',
-        'hkd',
-        'jpy',
-        'nzd',
-        'sgd',
-        'usd',
-      ],
-    },
-    au_becs_debit: {
-      name: 'BECS Direct Debit',
-      flow: 'none',
-      countries: ['AU'],
-      currencies: ['aud'],
-    },
+    // eps: {
+    //   name: 'EPS',
+    //   flow: 'redirect',
+    //   countries: ['AT'],
+    //   currencies: ['eur'],
+    // },
+    // ideal: {
+    //   name: 'iDEAL',
+    //   flow: 'redirect',
+    //   countries: ['NL'],
+    //   currencies: ['eur'],
+    // },
+    // giropay: {
+    //   name: 'Giropay',
+    //   flow: 'redirect',
+    //   countries: ['DE'],
+    //   currencies: ['eur'],
+    // },
+    // multibanco: {
+    //   name: 'Multibanco',
+    //   flow: 'receiver',
+    //   countries: ['PT'],
+    //   currencies: ['eur'],
+    // },
+    // p24: {
+    //   name: 'Przelewy24',
+    //   flow: 'redirect',
+    //   countries: ['PL'],
+    //   currencies: ['eur', 'pln'],
+    // },
+    // sepa_debit: {
+    //   name: 'SEPA Direct Debit',
+    //   flow: 'none',
+    //   countries: [
+    //     'FR',
+    //     'DE',
+    //     'ES',
+    //     'BE',
+    //     'NL',
+    //     'LU',
+    //     'IT',
+    //     'PT',
+    //     'AT',
+    //     'IE',
+    //     'FI',
+    //   ],
+    //   currencies: ['eur'],
+    // },
+    // sofort: {
+    //   name: 'SOFORT',
+    //   flow: 'redirect',
+    //   countries: ['DE', 'AT'],
+    //   currencies: ['eur'],
+    // },
+    // wechat: {
+    //   name: 'WeChat',
+    //   flow: 'none',
+    //   countries: ['CN', 'HK', 'SG', 'JP'],
+    //   currencies: [
+    //     'aud',
+    //     'cad',
+    //     'eur',
+    //     'gbp',
+    //     'hkd',
+    //     'jpy',
+    //     'nzd',
+    //     'sgd',
+    //     'usd',
+    //   ],
+    // },
+    // au_becs_debit: {
+    //   name: 'BECS Direct Debit',
+    //   flow: 'none',
+    //   countries: ['AU'],
+    //   currencies: ['aud'],
+    // },
   };
 
   // Update the main button to reflect the payment method being selected.
