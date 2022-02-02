@@ -18,7 +18,7 @@ const products = [
   {
     id: 'shirt',
     name: 'Stripe Shirt',
-    price: 99,
+    price: 9,
     attributes: {size: 'Small Standard', gender: 'Woman'},
   },
 
@@ -57,4 +57,4 @@ const createStoreProducts = async () => {
   }
 };
 
-createStoreProducts();
+// createStoreProducts();
