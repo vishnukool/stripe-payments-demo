@@ -63,3 +63,6 @@ typings/
 # serverless
 serverless/
 .vscode/launch.json
+
+#IDE
+.idea
