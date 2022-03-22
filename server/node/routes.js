@@ -15,7 +15,7 @@ const {products} = require('./inventory');
 const express = require('express');
 const stripe = require('stripe')(config.stripe.secretKey);
 const cors = require('cors');
-const app = require('express')();
+const app = express()
 
 // Allow all
 app.use(cors());
@@ -51,6 +51,8 @@ const calculatePaymentAmount = async items => {
   }, 0);
   return total;
 };
+
+app.options('/payment_intents', cors())
 
 // Create the PaymentIntent on the backend.
 app.post('/payment_intents', async (req, res, next) => {
