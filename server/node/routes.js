@@ -15,11 +15,11 @@ const {products} = require('./inventory');
 const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(config.stripe.secretKey);
-import cors from "cors"
+const cors = require('cors');
 
-router.use(cors())
 stripe.setApiVersion(config.stripe.apiVersion);
 
+router.all('*', cors());
 // Render the main app HTML.
 router.get('/', (req, res) => {
   res.render('index.html');
