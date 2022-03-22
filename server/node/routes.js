@@ -13,15 +13,17 @@
 const config = require('./config');
 const {products} = require('./inventory');
 const express = require('express');
-const router = express.Router();
 const stripe = require('stripe')(config.stripe.secretKey);
 const cors = require('cors');
+const app = require('express')();
+
+// Allow all
+app.use(cors());
 
 stripe.setApiVersion(config.stripe.apiVersion);
 
-router.all('*', cors());
 // Render the main app HTML.
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.render('index.html');
 });
 
@@ -51,7 +53,7 @@ const calculatePaymentAmount = async items => {
 };
 
 // Create the PaymentIntent on the backend.
-router.post('/payment_intents', async (req, res, next) => {
+app.post('/payment_intents', async (req, res, next) => {
   let {currency, items} = req.body;
   const amount = await calculatePaymentAmount(items);
 
@@ -76,7 +78,7 @@ router.post('/payment_intents', async (req, res, next) => {
 });
 
 // Update PaymentIntent with shipping cost.
-router.post('/payment_intents/:id/shipping_change', async (req, res, next) => {
+app.post('/payment_intents/:id/shipping_change', async (req, res, next) => {
   const {items, shippingOption} = req.body;
   let amount = await calculatePaymentAmount(items);
   amount += products.getShippingCost(shippingOption.id);
@@ -92,7 +94,7 @@ router.post('/payment_intents/:id/shipping_change', async (req, res, next) => {
 });
 
 // Update PaymentIntent with currency and paymentMethod.
-router.post('/payment_intents/:id/update_currency', async (req, res, next) => {
+app.post('/payment_intents/:id/update_currency', async (req, res, next) => {
   const {currency, payment_methods} = req.body;
   try {
     const paymentIntent = await stripe.paymentIntents.update(req.params.id, {
@@ -106,7 +108,7 @@ router.post('/payment_intents/:id/update_currency', async (req, res, next) => {
 });
 
 // Webhook handler to process payments for sources asynchronously.
-router.post('/webhook', async (req, res) => {
+app.post('/webhook', async (req, res) => {
   let data;
   let eventType;
   // Check if webhook signing is configured.
@@ -196,7 +198,7 @@ router.post('/webhook', async (req, res) => {
  */
 
 // Expose the Stripe publishable key and other pieces of config via an endpoint.
-router.get('/config', (req, res) => {
+app.get('/config', (req, res) => {
   res.json({
     stripePublishableKey: config.stripe.publishableKey,
     stripeCountry: config.stripe.country,
@@ -208,17 +210,17 @@ router.get('/config', (req, res) => {
 });
 
 // Retrieve all products.
-router.get('/products', async (req, res) => {
+app.get('/products', async (req, res) => {
   res.json(await products.list());
 });
 
 // Retrieve a product by ID.
-router.get('/products/:id', async (req, res) => {
+app.get('/products/:id', async (req, res) => {
   res.json(await products.retrieve(req.params.id));
 });
 
 // Retrieve the PaymentIntent status.
-router.get('/payment_intents/:id/status', async (req, res) => {
+app.get('/payment_intents/:id/status', async (req, res) => {
   const paymentIntent = await stripe.paymentIntents.retrieve(req.params.id);
   const payload = {status: paymentIntent.status};
 
@@ -229,4 +231,4 @@ router.get('/payment_intents/:id/status', async (req, res) => {
   res.json({paymentIntent: payload});
 });
 
-module.exports = router;
+module.exports = app;
