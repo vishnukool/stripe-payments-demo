@@ -52,8 +52,6 @@ const calculatePaymentAmount = async items => {
   return total;
 };
 
-app.options('/payment_intents', cors())
-
 // Create the PaymentIntent on the backend.
 app.post('/payment_intents', async (req, res, next) => {
   let {currency, items} = req.body;
