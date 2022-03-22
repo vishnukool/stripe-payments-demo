@@ -55,13 +55,17 @@ router.post('/payment_intents', async (req, res, next) => {
   try {
     //build initial payment methods which should exclude currency specific ones
     const initPaymentMethods = config.paymentMethods.filter(paymentMethod => paymentMethod !== 'au_becs_debit');
-    
+
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency,
       payment_method_types: initPaymentMethods,
     });
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
     return res.status(200).json({paymentIntent});
   } catch (err) {
     return res.status(500).json({error: err.message});
@@ -86,7 +90,7 @@ router.post('/payment_intents/:id/shipping_change', async (req, res, next) => {
 
 // Update PaymentIntent with currency and paymentMethod.
 router.post('/payment_intents/:id/update_currency', async (req, res, next) => {
-  const {currency, payment_methods} = req.body; 
+  const {currency, payment_methods} = req.body;
   try {
     const paymentIntent = await stripe.paymentIntents.update(req.params.id, {
       currency,
@@ -96,7 +100,7 @@ router.post('/payment_intents/:id/update_currency', async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({error: err.message});
   }
-}); 
+});
 
 // Webhook handler to process payments for sources asynchronously.
 router.post('/webhook', async (req, res) => {
