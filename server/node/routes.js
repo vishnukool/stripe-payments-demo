@@ -15,6 +15,9 @@ const {products} = require('./inventory');
 const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(config.stripe.secretKey);
+import cors from "cors"
+
+router.use(cors())
 stripe.setApiVersion(config.stripe.apiVersion);
 
 // Render the main app HTML.
@@ -62,10 +65,10 @@ router.post('/payment_intents', async (req, res, next) => {
       currency,
       payment_method_types: initPaymentMethods,
     });
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    // res.header("Access-Control-Allow-Origin", '*');
+    // res.header("Access-Control-Allow-Credentials", true);
+    // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    // res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
     return res.status(200).json({paymentIntent});
   } catch (err) {
     return res.status(500).json({error: err.message});
