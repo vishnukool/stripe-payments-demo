@@ -55,7 +55,9 @@ const calculatePaymentAmount = async items => {
 // Create the PaymentIntent on the backend.
 app.post('/payment_intents', async (req, res, next) => {
   // let {currency, items} = req.body;
+  console.log(req.body);
   let {currency, price, quantity, productName, campaignId, productId} = req.body;
+
   // const amount = await calculatePaymentAmount(items);
 
   try {
