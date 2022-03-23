@@ -55,23 +55,35 @@ const calculatePaymentAmount = async items => {
 // Create the PaymentIntent on the backend.
 app.post('/payment_intents', async (req, res, next) => {
   // let {currency, items} = req.body;
-  let {currency, amount} = req.body;
+  let {currency, price, quantity, productName, campaignId, productId} = req.body;
   // const amount = await calculatePaymentAmount(items);
 
   try {
     //build initial payment methods which should exclude currency specific ones
     const initPaymentMethods = config.paymentMethods.filter(paymentMethod => paymentMethod !== 'au_becs_debit');
 
-
     const paymentIntent = await stripe.paymentIntents.create({
-      amount,
+      amount: price * quantity,
       currency,
+      description: productName,
+      metadata: {campaign_id: campaignId, product_id: productId, quantity: quantity},
       payment_method_types: initPaymentMethods,
     });
-    // res.header("Access-Control-Allow-Origin", '*');
-    // res.header("Access-Control-Allow-Credentials", true);
-    // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    // res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    return res.status(200).json({paymentIntent});
+  } catch (err) {
+    return res.status(500).json({error: err.message});
+  }
+});
+
+// Update PaymentIntent with shipping cost.
+app.post('/payment_intents/:id/update_quantity', async (req, res, next) => {
+  let {price, quantity, campaignId, productId} = req.body;
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.update(req.params.id, {
+      amount: price * quantity,
+      metadata: {campaign_id: campaignId, product_id: productId, quantity: quantity},
+    });
     return res.status(200).json({paymentIntent});
   } catch (err) {
     return res.status(500).json({error: err.message});
