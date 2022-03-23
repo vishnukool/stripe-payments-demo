@@ -226,12 +226,15 @@
     event.updateWith({status: 'success'});
   });
 
+  let lineItems = store.getLineItems();
+
   // Callback when the shipping option is changed.
   paymentRequest.on('shippingoptionchange', async (event) => {
     // Update the PaymentIntent to reflect the shipping cost.
+    let lineItems = store.getLineItems();
     const response = await store.updatePaymentIntentWithShippingCost(
       paymentIntent.id,
-      store.getLineItems(),
+      lineItems,
       event.shippingOption
     );
     event.updateWith({

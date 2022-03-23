@@ -54,8 +54,9 @@ const calculatePaymentAmount = async items => {
 
 // Create the PaymentIntent on the backend.
 app.post('/payment_intents', async (req, res, next) => {
-  let {currency, items} = req.body;
-  const amount = await calculatePaymentAmount(items);
+  // let {currency, items} = req.body;
+  let {currency, amount} = req.body;
+  // const amount = await calculatePaymentAmount(items);
 
   try {
     //build initial payment methods which should exclude currency specific ones
