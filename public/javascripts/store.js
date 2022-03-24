@@ -96,8 +96,12 @@ class Store {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          currency,
-          items,
+          currency: 'USD',
+          price: 100,
+          quantity: 1,
+          productName: "LOL",
+          campaignId: 1,
+          productId: 0,
         }),
       });
       const data = await response.json();
