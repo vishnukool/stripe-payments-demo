@@ -74,6 +74,7 @@ app.post('/payment_intents', async (req, res, next) => {
     console.log('4');
     return res.status(200).json({paymentIntent});
   } catch (err) {
+    console.log(err)
     return res.status(500).json({error: err.message});
   }
 });
