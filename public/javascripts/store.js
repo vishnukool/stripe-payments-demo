@@ -97,7 +97,7 @@ class Store {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           currency: 'USD',
-          price: 100,
+          price: 1,
           quantity: 1,
           productName: "LOL",
           campaignId: 1,
