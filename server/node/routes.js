@@ -58,6 +58,7 @@ app.post('/payment_intents', async (req, res, next) => {
   console.log(req.body);
   let {currency, price, quantity, productName, campaignId, productId} = req.body;
   console.log('2');
+  console.log(price * quantity * 100);
   // const amount = await calculatePaymentAmount(items);
 
   try {
@@ -65,10 +66,10 @@ app.post('/payment_intents', async (req, res, next) => {
     const initPaymentMethods = config.paymentMethods.filter(paymentMethod => paymentMethod !== 'au_becs_debit');
     console.log('3');
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: price * quantity,
+      amount: price * quantity * 100,
       currency,
-      // description: productName,
-      // metadata: {campaign_id: campaignId, product_id: productId, quantity: quantity},
+      description: productName,
+      metadata: {campaign_id: campaignId, product_id: productId, quantity: quantity},
       payment_method_types: initPaymentMethods,
     });
     console.log('4');
@@ -85,7 +86,7 @@ app.post('/payment_intents/:id/update_quantity', async (req, res, next) => {
 
   try {
     const paymentIntent = await stripe.paymentIntents.update(req.params.id, {
-      amount: price * quantity,
+      amount: price * quantity * 100,
       metadata: {campaign_id: campaignId, product_id: productId, quantity: quantity},
     });
     return res.status(200).json({paymentIntent});
