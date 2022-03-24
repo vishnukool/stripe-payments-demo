@@ -68,7 +68,6 @@ app.post('/payment_intents', async (req, res, next) => {
       amount: price * quantity,
       currency,
       description: productName,
-      metadata: {campaign_id: campaignId, product_id: productId, quantity: quantity},
       payment_method_types: initPaymentMethods,
     });
     console.log('4');
