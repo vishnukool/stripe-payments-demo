@@ -67,7 +67,8 @@ app.post('/payment_intents', async (req, res, next) => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: price * quantity,
       currency,
-      description: productName,
+      // description: productName,
+      // metadata: {campaign_id: campaignId, product_id: productId, quantity: quantity},
       payment_method_types: initPaymentMethods,
     });
     console.log('4');
