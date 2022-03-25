@@ -94,9 +94,7 @@ app.post('/payment_intents/:id/update_quantity', async (req, res, next) => {
 const YOUR_DOMAIN = 'https://brands.tempoplatform.com';
 
 app.post('/create-checkout-session', async (req, res) => {
-  console.log(req.body)
-  let {currency, price, quantity, productName, campaignId, productId, imageUrl} = req.body;
-  console.log(1)
+  let {currency, price, quantity, productName, campaignId, productId, imageUrl, productIndex} = req.body;
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -122,9 +120,8 @@ app.post('/create-checkout-session', async (req, res) => {
     },
     mode: 'payment',
     success_url: `${YOUR_DOMAIN}/thank-you`,
-    cancel_url: `${YOUR_DOMAIN}/canceled`,
+    cancel_url: `${YOUR_DOMAIN}/campaign/${campaignId}/product/${productIndex}`,
   });
-  console.log(2)
   return res.status(200).json({url: session.url});
   // res.redirect(303, session.url);
 });
