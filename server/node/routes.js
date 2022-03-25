@@ -115,11 +115,11 @@ app.post('/create-checkout-session', async (req, res) => {
           unit_amount: price * 100,
         },
         quantity: quantity,
-        shipping_address_collection: {
-          allowed_countries: ['US'],
-        },
       },
     ],
+    shipping_address_collection: {
+      allowed_countries: ['US'],
+    },
     mode: 'payment',
     success_url: `${YOUR_DOMAIN}/thank-you`,
     cancel_url: `${YOUR_DOMAIN}/canceled`,
