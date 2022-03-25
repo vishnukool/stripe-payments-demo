@@ -94,14 +94,28 @@ app.post('/payment_intents/:id/update_quantity', async (req, res, next) => {
 const YOUR_DOMAIN = 'https://brands.tempoplatform.com';
 
 app.post('/create-checkout-session', async (req, res) => {
+  let {currency, price, quantity, productName, campaignId, productId, imageUrl} = req.body;
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        price: 'price_1KLwDjHml7UVwjdx7MBJ3LMp',
-        //test
         // price: 'price_1Kgz1CHml7UVwjdxK9wyYvPh',
-        quantity: 1,
+        price_data: {
+          currency: currency,
+          product_data: {
+            name: productName,
+            images: [imageUrl],
+            metadata: {
+              campaign_id: campaignId,
+              product_id: productId,
+              quantity: quantity
+            }
+          },
+          unit_amount: price * 100,
+        },
+        quantity: quantity,
+        shipping_address_collection: {
+          allowed_countries: ['US'],
+        },
       },
     ],
     mode: 'payment',
