@@ -91,6 +91,27 @@ app.post('/payment_intents/:id/update_quantity', async (req, res, next) => {
   }
 });
 
+const YOUR_DOMAIN = 'https://brands.tempoplatform.com';
+
+app.post('/create-checkout-session', async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+        price: 'price_1KLwDjHml7UVwjdx7MBJ3LMp',
+        //test
+        // price: 'price_1Kgz1CHml7UVwjdxK9wyYvPh',
+        quantity: 1,
+      },
+    ],
+    mode: 'payment',
+    success_url: `${YOUR_DOMAIN}/thank-you`,
+    cancel_url: `${YOUR_DOMAIN}/canceled`,
+  });
+
+  res.redirect(303, session.url);
+});
+
 // Update PaymentIntent with shipping cost.
 app.post('/payment_intents/:id/shipping_change', async (req, res, next) => {
   const {items, shippingOption} = req.body;
