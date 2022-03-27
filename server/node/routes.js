@@ -122,7 +122,7 @@ app.post('/create-checkout-session', async (req, res) => {
     success_url: `${YOUR_DOMAIN}/thank-you`,
     cancel_url: `${YOUR_DOMAIN}/campaign/${campaignId}/product/${productIndex}`,
   });
-  let encodedUrl = encodeURIComponent(session.url);
+  let encodedUrl = encodeURI(session.url);
   console.log('session.url')
   console.log(encodedUrl)
   return res.status(200).json({url: encodedUrl});
